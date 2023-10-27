@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Current File",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+      {
+        "name": "Python: main.py",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/main.py",
+        "args": ["-u", "https://results.finishtime.co.za/results.aspx?CId=35&RId=3875&EId=3", "-o", "results.xlsx"],
+        "console": "integratedTerminal",
+        "justMyCode": true
+      },
+    ]
+  }
+  

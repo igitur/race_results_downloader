@@ -1,0 +1,8 @@
+beautifulsoup4
+black
+html5lib
+isort
+loguru
+openpyxl
+pandas
+requests

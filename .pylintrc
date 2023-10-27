@@ -1,0 +1,13 @@
+
+[Messages Control]
+# The below section disables specified items.
+# C0103: Invalid name
+# C0114: Missing module docstring
+# C0116: Don't require docstrings on every method
+# C0411: Import order is not considered (but will be checked by hacking in tox)
+# R0914: Too many local variables
+# W0511: TODOs in code comments are fine.
+# W0621: Redefining built-in is fine.
+# W0622: Redefining id is fine.
+# W0718: Catching too general exception Exception is fine.
+disable=C0103,C0114,C0116,C0411,R0914,W0511,W0621,W0622,W0718
