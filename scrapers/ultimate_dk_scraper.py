@@ -3,7 +3,7 @@ from urllib.parse import parse_qs, urljoin, urlparse
 from bs4 import BeautifulSoup
 from loguru import logger
 
-import scrapers.scraper as scraper
+from scrapers import scraper
 
 DATA_URL_TEMPLATE = "https://live.ultimate.dk/desktop/front/data.php?results_startrecord=1000000&eventid={eventid}&mode=results&distance={distance_id}&category=&language=us"
 
@@ -33,7 +33,7 @@ class UltimateDkScraper(scraper.Scraper):
 def _get_results_from_main(soup: BeautifulSoup, base_url) -> list:
     race_name = (
         soup.find(id="main_screen")
-        .select_one("table:nth-of-type(2) td:nth-of-type(2)")
+        .select_one("table:nth-last-child(3) td:nth-of-type(2)")
         .text
     )
 
@@ -58,15 +58,18 @@ def _get_results_from_main(soup: BeautifulSoup, base_url) -> list:
 
 def _get_distances(soup: BeautifulSoup) -> list:
     try:
-        distance_select = soup.find(id="results_distance")
-        if distance_select is not None:
-            options = list(distance_select.find_all("option"))
+        search_distance = soup.find(id="search_distance")
+        if search_distance is not None:
+            options = list(search_distance.find_all("option"))
             if len(options) == 0:
-                logger.warning("No distances found. Assuming only one distances.")
+                logger.warning("No distances found. Assuming only one distance.")
                 yield (None, None)
                 return
 
             for option in options:
+                if "value" not in option.attrs or option.attrs["value"] == "":
+                    continue
+
                 distance_id = int(option.attrs["value"])
                 distance_name = option.text
                 yield (distance_id, distance_name)
